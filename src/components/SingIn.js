@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 function SignIn(props) {
   const classes = useStyles();
-  const {login , setlogin,setpassword,setusername,signin,username,password} =props;
+  const { login, setlogin, setpassword, setusername, signin, username, password ,forgot } = props;
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -60,9 +60,9 @@ function SignIn(props) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form onSubmit={(e)=>{e.preventDefault()}} className={classes.form} noValidate>
+        <form onSubmit={(e) => { e.preventDefault() }} className={classes.form} noValidate>
           <TextField
-            // error
+            isRequired="true"
             variant="outlined"
             margin="normal"
             required
@@ -73,10 +73,11 @@ function SignIn(props) {
             value={username}
             autoComplete="email"
             autoFocus
-            onChange={e=>setusername(e.target.value)}
-            // helperText="hi i am error"
+            onChange={e => setusername(e.target.value)}
+          // helperText="hi i am error"
           />
           <TextField
+            isRequired="true"
             variant="outlined"
             margin="normal"
             required
@@ -87,7 +88,7 @@ function SignIn(props) {
             id="password"
             value={password}
             autoComplete="current-password"
-            onChange={e=>setpassword(e.target.value)}
+            onChange={e => setpassword(e.target.value)}
           />
           <Button
             type="submit"
@@ -95,13 +96,18 @@ function SignIn(props) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={()=>signin()}
+            onClick={() => signin()}
           >
             Sign In
           </Button>
           <Grid container>
+          <Grid item xs>
+              <Link onClick={() => forgot()} variant="body2">
+                Forgot password?
+              </Link>
+            </Grid>
             <Grid item>
-              <Link  variant="body2" onClick={()=>setlogin(!login)}>
+              <Link variant="body2" onClick={() => setlogin(!login)}>
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
@@ -114,4 +120,4 @@ function SignIn(props) {
     </Container>
   );
 }
-export default  SignIn;
+export default SignIn;

@@ -80,7 +80,7 @@ export default function Showdata(props) {
                 PaperProps={{
                   style: {
                     // fontSize :'10px',
-                    width: '15ch'
+                    width: '16ch'
                   },
                 }}
               >

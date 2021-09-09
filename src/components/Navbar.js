@@ -14,23 +14,23 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-  },
+  }
 }));
 
 function Navbar(props) {
   const classes = useStyles();
-  const {userid ,signout}=props;
+  const {displayname ,signout}=props;
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar className={classes.nav}>
           <Typography variant="h6" className={classes.title}>
             To-Do-List
           </Typography>
           {/* <Typography variant="h6" className={classes.title}>
             To-Do-List
           </Typography> */}
-          <div>Welcome ,{userid}</div>
+          <div>Welcome, {displayname}</div>
             <Button color="inherit" onClick={signout}>Login</Button>
 
         </Toolbar>

@@ -20,16 +20,52 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    // flex-direction:row;
 
     &-button{
         height: 38px;
     }
 }
+
+
 .show{
     
     display :flex;
     justify-content: space-between;
+    flex-direction: row;
     width: 80%;
     margin: auto;
        
+}
+@media screen and (max-width: 1100px){
+    .show{
+        width:90%;
+        margin:auto;
+        align-items:center;
+        // justify-content:center;
+        // background-color:black;
+
+    }
+    .addtask{
+        margin: 50px 10px;
+    }
+    #input{
+        width:105px;
+        
+        // padding:10px 2px;
+    }
+    #text{
+        width:170px;
+        height: 48px;
+    }
+}
+
+@media screen and (max-width: 680px){
+    .show{
+        // flex-direction
+        flex-direction: column;
+        color:red;
+        // margin:20px 0px;
+        overflow: 'scrol';
+    }
 }

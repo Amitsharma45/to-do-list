@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 function SignUp(props) {
   const classes = useStyles();
 
-  const {login , setlogin,setpassword,setusername ,signup,username,password} =props;
+  const {login , setlogin,setpassword,setusername ,signup,username,password ,setname ,name} =props;
 
   return (
     <Container component="main" maxWidth="xs">
@@ -63,27 +63,18 @@ function SignUp(props) {
         </Typography>
         <form onSubmit={(e)=>{e.preventDefault()}} className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} >
               <TextField
                 autoComplete="fname"
-                name="firstName"
+                name="Name"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="Name"
+                value={name}
+                onChange={e=>setname(e.target.value)}	
+                label="Name"
                 autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
               />
             </Grid>
             <Grid item xs={12}>
