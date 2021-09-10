@@ -9,13 +9,6 @@ import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import { getDatabase, ref, onValue, set } from "firebase/database";
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    Redirect,
-  } from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -64,8 +57,6 @@ function Home(props) {
     const [work, setwork] = useState([]);
     const [comp, setcomp] = useState([]);
     const [load, setload] = useState(false);
-    
-    // {data:'dfsd',time:'cvdc'},{data:'dfsd',time:'cvdc'}
     const db = getDatabase();
     
     
@@ -74,7 +65,6 @@ function Home(props) {
         const starCountRef = ref(db, 'users/' + userid);
         onValue(starCountRef, (snapshot) => {
             const data = snapshot.val();
-            // console.log(work);
             if (data !== null) {
                 if (data.data !== undefined) {
                     setdata(data.data);
@@ -93,21 +83,15 @@ function Home(props) {
                 }else{
                     setcomp([]);
                 }
-                // console.log(data.work);
             }
             setload(true);
             
         });
-        // console.log('1');
-        // console.log(work);
     },[]);
     
     useEffect(() => {
         
         function writeUserData(userid, data, work, comp) {
-            
-            // console.log(work);
-        // const db = getDatabase();
             set(ref(db, 'users/' + userid), {
                 data: data,
                 work: work,
@@ -116,37 +100,31 @@ function Home(props) {
             
         }
         if(load){
-            // setTimeout(() => {
                 writeUserData(userid, data, work, comp);
-                // setload(true);
-                // console.log('2');
-            // }, 5000);
         }
     },[data,work,comp]);
 
 
     const addinput =  () => {
-
-        const d = new Date();
-        const days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"]
-        const value = {
-            data: input,
-            time: days[d.getDay()] + ' ' + String(d.getDate()) + ', ' + String(d.getHours()) + ':' + String(d.getMinutes())
+        if(input.trim() !== ''){
+            const d = new Date();
+            const days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"]
+            const value = {
+                data: input,
+                time: days[d.getDay()] + ' ' + String(d.getDate()) + ', ' + String(d.getHours()) + ':' + String(d.getMinutes())
+            }
+            setdata([...data, value]);
         }
-        setdata([...data, value]);
-        // console.log('hi i clicked');
         setinput('');
-        // writeUserData(userid, data, work, comp);
     }
     const del = (value, mark) => {
         if (mark === "a") {
             setdata(data.filter((e) => { return e !== value }));
         } else if (mark === "b") {
-            setwork(work.filter((e) => { return e != value }));
+            setwork(work.filter((e) => { return e !== value }));
         } else {
-            setcomp(comp.filter((e) => { return e != value }));
+            setcomp(comp.filter((e) => { return e !== value }));
         }
-        // writeUserData(userid, data, work, comp);
     }
     const edit = (value, mark) => {
         setinput(value.data);
@@ -156,28 +134,24 @@ function Home(props) {
         if (mark === "a") {
             if (n === 0) {
                 setwork([...work, input]);
-                // console.log(n);
             } else {
                 setcomp([...comp, input]);
             }
         } else if (mark === "b") {
             if (n === 0) {
                 setdata([...work, input]);
-                // console.log(n);
             } else {
                 setcomp([...comp, input]);
             }
         } else {
             if (n === 0) {
                 setdata([...data, input]);
-                // console.log(n);
             } else {
                 setwork([...work, input]);
             }
 
         }
         del(input, mark);
-        // writeUserData(userid, data, work, comp);
 
     }
 
@@ -187,10 +161,9 @@ function Home(props) {
             <div className='addtask'>
                 <form onSubmit={(e) => { e.preventDefault() }} noValidate>
                     <TextField
-                    
+                        id=""
                         required='true'
-                        // id="outlined-required"
-                        id='text'
+                        // id='text'
                         label="Add Task"
                         size="small"
                         variant="outlined"

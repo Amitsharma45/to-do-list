@@ -31,7 +31,7 @@ function Navbar(props) {
             To-Do-List
           </Typography> */}
           <div>Welcome, { displayname}</div>
-            <Button color="inherit" onClick={signout}>Login</Button>
+            <Button color="inherit" onClick={signout}>Logout</Button>
 
         </Toolbar>
       </AppBar>

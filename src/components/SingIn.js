@@ -103,12 +103,12 @@ function SignIn(props) {
           </Button>
           <Grid container>
           <Grid item xs>
-              <Link to='#' onClick={() => forgot()} variant="body2">
+              <Link  style={{textDecoration: 'none'}} to='#' onClick={() => forgot()} variant="body2">
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link variant="body2" to="/signup">
+              <Link style={{textDecoration: 'none'}} variant="body2" to="/signup">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
