@@ -30,7 +30,7 @@ function Navbar(props) {
           {/* <Typography variant="h6" className={classes.title}>
             To-Do-List
           </Typography> */}
-          <div>Welcome, {displayname}</div>
+          <div>Welcome, { displayname}</div>
             <Button color="inherit" onClick={signout}>Login</Button>
 
         </Toolbar>

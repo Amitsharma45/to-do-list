@@ -2,10 +2,18 @@ import './App.css';
 import SignUp from './Signup';
 import SignIn from './SingIn';
 import Home from './Home';
-import React, { useState } from 'react';
+import React, { useState ,useEffect } from 'react';
 import './Firebase';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendEmailVerification ,sendPasswordResetEmail,updateProfile   } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail, updateProfile } from "firebase/auth";
 import { getDatabase, ref, onValue, set } from "firebase/database";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from "react-router-dom";
+
 function App() {
   const [login, setlogin] = useState(false);
   const [username, setusername] = useState('');
@@ -14,20 +22,20 @@ function App() {
   const [name, setname] = useState();
   const [displayname, setdisplayname] = useState('hi');
   // 3Lr1Lcts4CSosywz0xrK6YtjDIv2
-  // const db = getDatabase();
+  // let history = useHistory();
+
   const clearinput = () => {
-    // console.log('fuck');
+
     setusername('');
     setpassword('');
     setname('');
   }
-  const forgot =()=>{
-    console.log('g');
+  const forgot = () => {
     const auth = getAuth();
     sendPasswordResetEmail(auth, username)
       .then(() => {
         // Password reset email sent!
-        alert('Succes fully send mail please check email');
+        alert('Password reset email sent! to your '+ username+'  account');
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -43,34 +51,28 @@ function App() {
       createUserWithEmailAndPassword(auth, username, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          // const u=user.uid;
-          // console.log(u);
           updateProfile(user, {
             displayName: name
           }).then(() => {
             // Profile updated!
             console.log('complete');
           })
-          // set(ref(db, 'users/' + u), {
-          //   name: [name]
-          // });
+
           setuserid(user.uid);
           clearinput();
           alert('You Account Create Sucessfull');
         })
         .catch((error) => {
-          const errorCode = error.code;
+          // const errorCode = error.code;
           const errorMessage = error.message;
-          alert(errorCode);
-          // ..
+          alert(errorMessage);
+
         });
     } else {
       alert('Please Fill All Detail\'s');
     }
   }
-
   const signin = () => {
-
     const auth = getAuth();
     signInWithEmailAndPassword(auth, username, password)
       .then((userCredential) => {
@@ -79,19 +81,34 @@ function App() {
         clearinput();
         setdisplayname(user.displayName);
         setuserid(user.uid);
-        // console.log(user.displayName);
-        // console.log(name);
+        // alert('hi') 
 
       })
       .catch((error) => {
-        
+
         const errorMessage = error.message;
         alert(errorMessage);
+
         // console.log(errorMessage);
       });
-
-    
   }
+
+  useEffect(()=>{
+    
+
+const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    const uid = user.uid;
+    // ...
+  } else {
+    // User is signed out
+    // ...
+  }
+});
+  });
 
   const signout = () => {
     const auth = getAuth();
@@ -102,30 +119,35 @@ function App() {
     }).catch((error) => {
       // An error happened.
     });
-    // console.log('i am working');
-
   }
 
 
   return (
     <div className="App">
+      <Router>
 
-      {(userid == '') ? (
-        [(login) ? (
-          <SignUp login={login} setlogin={setlogin} setpassword={setpassword} setusername={setusername} signup={signup}
-            username={username} password={password} setname={setname} name={name} />
+        {userid === '' ? (
+          <Redirect to={{ pathname: "/signin" }} />
         ) : (
-          <SignIn login={login} setlogin={setlogin} setpassword={setpassword} setusername={setusername} signin={signin} username={username} password={password} forgot={forgot}/>
-        )]
-
-      ) : (
-        <Home userid={userid} signout={signout} displayname={displayname} />
-      )
-
-      }
-
-
-    </div>
+          <Redirect to={{ pathname: "/home" }} />
+        )}
+        <Switch>
+          <Route exact path="/signup">
+            <SignUp login={login} setlogin={setlogin} setpassword={setpassword} setusername={setusername} signup={signup}
+              username={username} password={password} setname={setname} name={name} />
+          </Route>
+          <Route exact path="/signin">
+            <SignIn login={login} setlogin={setlogin} setpassword={setpassword} setusername={setusername} signin={signin} username={username} password={password} forgot={forgot} />
+          </Route>
+          <Route exact path="/">
+            <Redirect to={{ pathname: "/signup" }} />
+          </Route>
+          <Route exact path="/home">
+            <Home userid={userid} signout={signout} displayname={displayname} />
+          </Route>
+        </Switch>
+      </Router >
+    </div >
   );
 }
 
