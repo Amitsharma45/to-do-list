@@ -42,9 +42,6 @@
         width:90%;
         margin:auto;
         align-items:center;
-        // justify-content:center;
-        // background-color:black;
-
     }
     .addtask{
         margin: 50px 10px;
@@ -55,9 +52,10 @@
         // padding:10px 2px;
     }
     #text{
-        width:170px;
+        width:180px;
         // height: 48px;
     }
+    
 }
 
 @media screen and (max-width: 680px){
@@ -67,5 +65,13 @@
         color:red;
         // margin:20px 0px;
         overflow: 'scrol';
+    }
+    #text{
+        width:150px;
+        // height: 48px;
+    }
+    #input{
+        // font-size: 8px;
+        width:105px;
     }
 }

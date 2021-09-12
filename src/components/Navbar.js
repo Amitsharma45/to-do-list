@@ -14,6 +14,14 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+  },
+  nav:{
+    [theme.breakpoints.down('400')]: {
+      // backgroundColor: 'red',
+      flexDirection:'column',
+      // width:'250px',
+      
+      }
   }
 }));
 
@@ -27,12 +35,10 @@ function Navbar(props) {
           <Typography variant="h6" className={classes.title}>
             To-Do-List
           </Typography>
-          {/* <Typography variant="h6" className={classes.title}>
-            To-Do-List
-          </Typography> */}
-          <div>Welcome, { displayname}</div>
+          <div>
+            <span>Welcome, { displayname}</span>
             <Button color="inherit" onClick={signout}>Logout</Button>
-
+          </div>
         </Toolbar>
       </AppBar>
     </div>

@@ -1,9 +1,7 @@
 import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Menu from '@material-ui/core/Menu';
@@ -53,15 +51,10 @@ export default function Showdata(props) {
   };
   return (
     <>
-      {/* {data.map(input => ( */}
-
         <Paper className={classes.root} variant="outlined" >
           <ListItem className={classes.list} >
             <ListItemText primary={<div className={classes.primary}>{input.data}</div>} secondary={<div className=
               {classes.secondary}>{input.time}</div>} />
-            {/* <IconButton edge="end" aria-label="delete"> */}
-            {/* < DeleteIcon onClick={() => { del(input) }}/>
-               */}
             <>
               <IconButton
                 aria-label="more"
@@ -112,7 +105,6 @@ export default function Showdata(props) {
             </>
           </ListItem>
         </Paper>
-      {/* // ))} */}
     </>
   );
 }

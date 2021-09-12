@@ -2,15 +2,13 @@ import './App.css';
 import SignUp from './Signup';
 import SignIn from './SingIn';
 import Home from './Home';
-import React, { useState ,useEffect } from 'react';
+import React, { useState  } from 'react';
 import './Firebase';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail, updateProfile } from "firebase/auth";
-import { getDatabase, ref, onValue, set } from "firebase/database";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,  sendPasswordResetEmail, updateProfile } from "firebase/auth";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
 } from "react-router-dom";
 
@@ -92,23 +90,6 @@ function App() {
         // console.log(errorMessage);
       });
   }
-
-  useEffect(()=>{
-    
-
-const auth = getAuth();
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/firebase.User
-    const uid = user.uid;
-    // ...
-  } else {
-    // User is signed out
-    // ...
-  }
-});
-  });
 
   const signout = () => {
     const auth = getAuth();

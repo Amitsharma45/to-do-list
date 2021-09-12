@@ -161,9 +161,8 @@ function Home(props) {
             <div className='addtask'>
                 <form onSubmit={(e) => { e.preventDefault() }} noValidate>
                     <TextField
-                        id=""
                         required='true'
-                        // id='text'
+                        id='text'
                         label="Add Task"
                         size="small"
                         variant="outlined"
