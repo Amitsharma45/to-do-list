@@ -20,7 +20,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    // flex-direction:row;
+    flex-direction:row;
 
     &-button{
         height: 38px;
@@ -42,6 +42,7 @@
         width:90%;
         margin:auto;
         align-items:center;
+        // flex-direction: column;
     }
     .addtask{
         margin: 50px 10px;
@@ -55,7 +56,9 @@
         width:180px;
         // height: 48px;
     }
-    
+    #card{
+        width: 200px;
+    }
 }
 
 @media screen and (max-width: 680px){
@@ -74,4 +77,8 @@
         // font-size: 8px;
         width:105px;
     }
+    #card{
+        width: 260px;
+    }
+
 }

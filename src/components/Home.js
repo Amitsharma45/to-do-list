@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'rgba(0, 0, 0, 0.1)', borderColor: 'rgba(0, 0, 0, 0.4)',
         width: '300px',
         height: '380px',
+
         margin:'20px 0px',
         overflowY:'scroll',
         scrollbarColor: "#6b6b6b #2b2b2b",
@@ -35,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
         width:'250px',
         
         }
-        
     },
     h2: {
         textAlign: 'center',
@@ -50,18 +50,17 @@ const useStyles = makeStyles((theme) => ({
 function Home(props) {
 
     const classes = useStyles();
-    // 3Lr1Lcts4CSosywz0xrK6YtjDIv2
-    const { userid, signout ,displayname} = props;
+    const { userid, signout ,displayname,loading,setLoading} = props;
     const [input, setinput] = useState();
     const [data, setdata] = useState([]);
     const [work, setwork] = useState([]);
     const [comp, setcomp] = useState([]);
-    const [load, setload] = useState(false);
+    const [load, setload] = useState(true);
     const db = getDatabase();
-    
     
 
     useEffect(() => {
+        setLoading(true);
         const starCountRef = ref(db, 'users/' + userid);
         onValue(starCountRef, (snapshot) => {
             const data = snapshot.val();
@@ -83,11 +82,10 @@ function Home(props) {
                 }else{
                     setcomp([]);
                 }
-            }
-            setload(true);
-            
+            }  
         });
     },[]);
+
     
     useEffect(() => {
         
@@ -139,7 +137,7 @@ function Home(props) {
             }
         } else if (mark === "b") {
             if (n === 0) {
-                setdata([...work, input]);
+                setdata([...data, input]);
             } else {
                 setcomp([...comp, input]);
             }
@@ -157,6 +155,8 @@ function Home(props) {
 
     return (
         <div className='home' >
+            {/* {loading == false ?(  */}
+            <div>    
             <Navbar displayname={displayname} signout={signout} />
             <div className='addtask'>
                 <form onSubmit={(e) => { e.preventDefault() }} noValidate>
@@ -188,7 +188,7 @@ function Home(props) {
                 </form>
             </div>
             <div className='show'>
-                <Paper overflow='hidden' className={classes.root} variant="outlined" >
+                <Paper overflow='hidden' className={classes.root} id='card' variant="outlined" >
                     <List  >
                         <h2 className={classes.h2} >Active Task: {data.length}</h2>
                         {data.map(input => (
@@ -196,7 +196,7 @@ function Home(props) {
                         ))}
                     </List>
                 </Paper>
-                <Paper className={classes.root} variant="outlined" >
+                <Paper className={classes.root} variant="outlined" id='card' >
                     <List  >
                         <h2 className={classes.h2}>In Working: {work.length}</h2>
                         {work.map(input => (
@@ -204,7 +204,7 @@ function Home(props) {
                         ))}
                     </List>
                 </Paper>
-                <Paper className={classes.root} variant="outlined" >
+                <Paper className={classes.root} variant="outlined" id='card' >
                     <List  >
                         <h2 className={classes.h2}>Completed: {comp.length}</h2>
                         {comp.map(input => (
@@ -214,6 +214,10 @@ function Home(props) {
                     </List>
                 </Paper>
             </div>
+            </div>
+            {/* ):(
+                <Preloader loading={loading} /> 
+            )} */}
         </div>
     )
 }

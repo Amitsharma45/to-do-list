@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 function SignUp(props) {
   const classes = useStyles();
 
-  const {setpassword,setusername ,signup,username,password ,setname ,name} =props;
+  const {setpassword,setusername ,signup,username,password ,setname ,name,loading} =props;
 
   return (
     <Container component="main" maxWidth="xs">
@@ -116,6 +116,7 @@ function SignUp(props) {
           >
             Sign Up
           </Button>
+          
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link  style={{textDecoration: 'none'}} variant="body2" to="/signin">

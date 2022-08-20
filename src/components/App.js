@@ -1,6 +1,7 @@
 import './App.css';
 import SignUp from './Signup';
 import SignIn from './SingIn';
+import Preloader from './preloader';
 import Home from './Home';
 import React, { useState  } from 'react';
 import './Firebase';
@@ -19,6 +20,7 @@ function App() {
   const [userid, setuserid] = useState('');
   const [name, setname] = useState();
   const [displayname, setdisplayname] = useState('hi');
+  const [loading, setLoading] = useState(false);
   // 3Lr1Lcts4CSosywz0xrK6YtjDIv2
   // let history = useHistory();
 
@@ -37,6 +39,7 @@ function App() {
       })
       .catch((error) => {
         const errorMessage = error.message;
+        
         alert(errorMessage);
         // ..
       });
@@ -63,11 +66,19 @@ function App() {
         .catch((error) => {
           // const errorCode = error.code;
           const errorMessage = error.message;
-          alert(errorMessage);
+          // alert(errorMessage);
+          // console.log(errorMessage);
+          if(errorMessage === "Firebase: Error (auth/email-already-in-use)."){
+            alert("Email already registered");
+          }else if(errorMessage === "Firebase: Error (auth/weak-password)."){
+            alert("A password should be at least 6 characters");
+          }else{
+            alert(errorMessage);
+          }
 
         });
     } else {
-      alert('Please Fill All Detail\'s');
+      alert('Please fil all the details in the form');
     }
   }
   const signin = () => {
@@ -79,14 +90,44 @@ function App() {
         clearinput();
         setdisplayname(user.displayName);
         setuserid(user.uid);
-        // alert('hi') 
-
+        
       })
       .catch((error) => {
 
         const errorMessage = error.message;
-        alert(errorMessage);
+        
+        if(errorMessage === "Firebase: Error (auth/user-not-found)."){
+          alert("Please Check You Email I'd");
+        }else if(errorMessage === "Firebase: Error (auth/wrong-password)."){
+          alert("Please Check You Password");
+        }else{
+          alert(errorMessage);
+        }
+        // console.log(errorMessage);
+      });
+  }
+  const signintest = (em,pas) => {
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, em, pas)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        clearinput();
+        setdisplayname(user.displayName);
+        setuserid(user.uid);
+        
+      })
+      .catch((error) => {
 
+        const errorMessage = error.message;
+        
+        if(errorMessage === "Firebase: Error (auth/user-not-found)."){
+          alert("Please Check You Email I'd");
+        }else if(errorMessage === "Firebase: Error (auth/wrong-password)."){
+          alert("Please Check You Password");
+        }else{
+          alert(errorMessage);
+        }
         // console.log(errorMessage);
       });
   }
@@ -114,17 +155,20 @@ function App() {
         )}
         <Switch>
           <Route exact path="/signup">
-            <SignUp login={login} setlogin={setlogin} setpassword={setpassword} setusername={setusername} signup={signup}
-              username={username} password={password} setname={setname} name={name} />
+             <SignUp login={login} setlogin={setlogin} setpassword={setpassword} setusername={setusername} signup={signup} username={username} password={password} setname={setname} name={name} loading={loading}/> 
+            {/* <Preloader loading={loading} /> */}
+
           </Route>
           <Route exact path="/signin">
-            <SignIn login={login} setlogin={setlogin} setpassword={setpassword} setusername={setusername} signin={signin} username={username} password={password} forgot={forgot} />
+            <SignIn login={login} setlogin={setlogin} setpassword={setpassword} setusername={setusername} signin={signin} username={username} password={password} forgot={forgot} loading={loading} setdisplayname={setdisplayname} signintest= {signintest} />
+            {/* <Preloader loading={loading}/> */}
+
           </Route>
           <Route exact path="/">
             <Redirect to={{ pathname: "/signup" }} />
           </Route>
           <Route exact path="/home">
-            <Home userid={userid} signout={signout} displayname={displayname} />
+            <Home userid={userid} signout={signout} displayname={displayname} loading={loading} setLoading={setLoading}/>
           </Route>
         </Switch>
       </Router >

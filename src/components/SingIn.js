@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {Link} from "react-router-dom";
-
+import { getAuth,  signInWithEmailAndPassword } from "firebase/auth";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -45,9 +45,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 function SignIn(props) {
   const classes = useStyles();
-  const {  setpassword, setusername, signin, username, password ,forgot } = props;
+  const {  setpassword, setusername, signin, username, password ,forgot ,signintest} = props;
+  function testlogin(){
+    // setusername);
+    // setpassword('12345678')
+    signintest('test@gmail.com','12345678');
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -97,6 +104,18 @@ function SignIn(props) {
             onClick={() => signin()}
           >
             Sign In
+          </Button>
+          <div style={{textAlign : 'center' ,fontSize : '18px'}} >or </div>
+          <Button
+            type="button"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            style={{margin : '8px 0px'}}
+            onClick={testlogin}
+          >
+            Login with Test Account
           </Button>
           <Grid container>
           <Grid item xs>
